@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>إرسال الملفات</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="card">
+    <h2>اختر ملف لإرساله</h2>
+    <input type="file" id="file" />
+    <button class="btn btn-send" id="sendBtn">إرسال</button>
+    <p id="status">جاهز للإرسال.</p>
+    <a class="btn" href="/">رجوع</a>
+  </div>
+
+  <script>
+    const btn = document.getElementById("sendBtn");
+    const statusEl = document.getElementById("status");
+    btn.onclick = async () => {
+      const fileInput = document.getElementById("file");
+      const f = fileInput.files[0];
+      if (!f) return alert("اختر ملف أولًا");
+
+      const form = new FormData();
+      form.append("file", f);
+
+      statusEl.textContent = "جاري الإرسال...";
+      const t0 = Date.now();
+
+      try {
+        const res = await fetch("/upload", { method: "POST", body: form });
+        const data = await res.json();
+        const secs = (Date.now() - t0) / 1000;
+        statusEl.textContent = `تم الإرسال: ${data.filename} — ${data.sizeMB} MB — سرعة تقريبية: ${data.speed} (زمن: ${secs.toFixed(2)} ث)`;
+      } catch (e) {
+        statusEl.textContent = "حدث خطأ أثناء الإرسال.";
+      }
+    };
+  </script>
+</body>
+</html>
+

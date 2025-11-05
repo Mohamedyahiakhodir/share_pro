@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>استلام الملفات</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="card">
+    <h2>اعرض هذا الـ QR للمرسل</h2>
+    <img src="/static/qrcode.png" alt="QR" class="qr" />
+    <p>العنوان: <code>{{ url }}</code></p>
+    <p>IP: <b>{{ ip }}</b></p>
+    <a class="btn" href="/">رجوع</a>
+  </div>
+</body>
+</html>
+
